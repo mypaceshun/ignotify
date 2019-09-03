@@ -1,0 +1,29 @@
+{
+    "_meta": {
+        "hash": {
+            "sha256": "133ba764b0e75311a57b943d6d5720317a9fe3cce6625fcba1b45d3c7edc59b0"
+        },
+        "pipfile-spec": 6,
+        "requires": {
+            "python_version": "3.6"
+        },
+        "sources": [
+            {
+                "name": "pypi",
+                "url": "https://pypi.org/simple",
+                "verify_ssl": true
+            }
+        ]
+    },
+    "default": {
+        "instagram-private-api-1-6-0": {
+            "git": "https://git@github.com/ping/instagram_private_api.git",
+            "ref": "1d70e99bc11591161b0cd71cff3f0c08cd04b34f"
+        },
+        "instagram-private-api-extensions-0-3-8": {
+            "git": "https://git@github.com/ping/instagram_private_api_extensions.git",
+            "ref": "ca6f2b96dd359f766c5b08ae179f919573ae97bb"
+        }
+    },
+    "develop": {}
+}
