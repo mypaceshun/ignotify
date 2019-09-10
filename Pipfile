@@ -13,6 +13,7 @@ pytest = "*"
 [packages]
 instagram-private-api-1-6-0 = {git = "https://git@github.com/ping/instagram_private_api.git",ref = "1.6.0"}
 instagram-private-api-extensions-0-3-8 = {git = "https://git@github.com/ping/instagram_private_api_extensions.git",ref = "0.3.8"}
+requests_oauthlib = "*"
 
 [requires]
 python_version = "3.6"
