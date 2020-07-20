@@ -7,6 +7,7 @@ from requests_oauthlib import OAuth1Session
 
 USERNAME = os.environ.get("IGNOTIFY_USERNAME", "username")
 PASSWORD = os.environ.get("IGNOTIFY_PASSWORD", "password")
+DEBUG = os.environ.get("IGNOTIFY_DEBUG", "False").lower() == "true"
 
 filename = "var/settings.json"
 before_file = "var/before.txt"
@@ -20,7 +21,9 @@ AT = os.environ.get("AT")
 AS = os.environ.get("AS")
 
 text = "インスタライブがはじまったよ！！！"
-text = "ててて"
+
+toTwitter = False
+toLINE = True
 
 access_token = os.environ.get('ACCESS_TOKEN')
 
@@ -53,25 +56,32 @@ def main():
         with open(before_file) as file:
             before_status = file.readline()
 
+    if DEBUG:
+        print('run with debug mode')
+    else:
+        print('now status is {}, before status is {}'.format(status, before_status))
+
     with open(before_file, "w") as file:
         file.write(str(status))
 
-    if status is True and before_status == 'False':
-        twitter = OAuth1Session(CK, CS, AT, AS)
-        params = {"status": text}
-        now = datetime.datetime.now()
-        print("{}: {}".format(now, text))
-        res = twitter.post('https://api.twitter.com/1.1/statuses/update.json', params=params)
-        now = datetime.datetime.now()
-        print("{}: status code: {}".format(now, res.status_code))
-        if res.status_code != 200:
-            _error = json.loads(res.text)
-            if 'errors' in _error.keys():
-                _error = _error['errors'][0]
+    if status is True and before_status == 'False' or DEBUG is True:
+        if toTwitter:
+            twitter = OAuth1Session(CK, CS, AT, AS)
+            params = {"status": text}
+            now = datetime.datetime.now()
+            print("{}: {}".format(now, text))
+            res = twitter.post('https://api.twitter.com/1.1/statuses/update.json', params=params)
+            now = datetime.datetime.now()
+            print("{}: status code: {}".format(now, res.status_code))
+            if res.status_code != 200:
+                _error = json.loads(res.text)
+                if 'errors' in _error.keys():
+                    _error = _error['errors'][0]
 
-            for k in _error:
-                print("{}: {}: {}".format(now, k, _error[k]))
-        line(text)
+                for k in _error:
+                    print("{}: {}: {}".format(now, k, _error[k]))
+        if toLINE:
+            line(text)
 
 
 if __name__ == '__main__':
